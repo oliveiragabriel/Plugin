@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<script src="./js/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+	<script >
+		var servico = "http://botanicapp.com.br/receitas_teste.php";
+		var $xhr = $.get(servico);
+		$xhr.done(function(data){
+			var receitas = JSON.parse(data);
+			$.each(receitas, function(indice,receita){
+				
+				var $ul= $("<ul/>");
+				$.each(receita.ingredientes, function(indice,ingredientes){
+					$ul.append($("<li/>").text(ingredientes));	
+				});
+				var $ol= $("<ol/>");
+				$.each(receita.preparo, function(indice,preparo){
+					$ol.append($("<li/>").text(preparo));	
+				});
+				$("#resultado")
+					.append($("<p/>").text (receita.nome))
+					.append($("<img/>").attr("src", receita.foto))
+					.append($("<p/>").text (receita.descricao))
+					.append($ul)
+					.append($ol)
+						
+			});
+			$xhr.fail(function(data){
+				console.log(data);
+				$("#resultado").text("Erro!");
+			});
+		});
+	</script>
+	<style>
+		h1{
+			font-family: 'Sanchez', serif;
+			color: #D2691E;
+			text-align: center;
+		}
+		body{
+			background-color: #F5F5F5;
+			
+		}
+		ul{
+			list-style: none;
+		}
+		p{
+			text-align: center;
+			font-family: 'Sanchez', serif;
+		}
+		li{
+			list-style: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>Receitas e Temperos</h1>
+	<p id="resultado"></p>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Formulário</title>
+	<script src="./js/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+	<script>
+		$(function(){
+			$("#cep").blur(function(){
+				var cep = $("#cep").val();
+				
+				var servico = "http://api.postmon.com.br/v1/cep/";
+				
+				var $xhr = $.get(servico + cep);
+				
+				$xhr.done(function(endereco){
+					
+										
+					$("#logradouro").val(endereco.logradouro); 
+					$("#numero").val(endereco.complemento);
+					$("#bairro").val(endereco.bairro);
+					$("#cidade").val(endereco.cidade);
+					$("#estado").val(endereco.estado);
+						
+				});		
+			});
+		
+		});
+	</script>
+	<style>
+		body{
+			background-image: url("./back-img.png");
+			font-family: 'Sanchez', serif;
+			text-align: center;
+		}
+		#save{
+			background-color: white;
+			color: black;
+			border: 2px solid #4CAF50; /* Green */
+			font-family: 'Sanchez', serif;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Formulário</h1>
+	<form action="#" method="POST">
+		<input type="text" id="nome" placeholder="Digite seu nome"/><br/>
+		<br/>Endereço<br/>
+		<br/><input type="text" id="cep" placeholder="Digite seu CEP"/><br/>
+		<br/><input type="text" id="logradouro" placeholder="Digite seu logradouro"/><br/>
+		<br/><input type="number" id="numero" placeholder="Digite seu número"/><br/>
+		<br/><input type="text" id="bairro" placeholder="Digite seu bairro"/><br/>
+		<br/><input type="text" id="cidade" placeholder="Digite sua cidade"/><br/>
+		<br/><input type="text" id="estado" placeholder="Digite seu estado"/><br/>
+		<br/><input type="submit" id="save" value="Salvar"/>
+	</form>
+</body>
+</html>
